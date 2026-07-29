@@ -5,7 +5,7 @@ const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_dyhXIH7rBE1b0FHaqr1AEA_hFwCg5m4
 const TABLE_NAME = "lugares";
 
 const TIPOS = [
-  { value: "Restaurante", emoji: "🍽️" },
+  { value: "Restaurante/Bar", emoji: "🍽️" },
   { value: "Monumento", emoji: "🗿" },
   { value: "Plaza", emoji: "🏛️" },
   { value: "Mirador", emoji: "🌄" },
