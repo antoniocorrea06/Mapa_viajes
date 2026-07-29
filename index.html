@@ -34,12 +34,12 @@
         </nav>
 
         <form id="login-form" class="login-form-stack">
-          <label class="sr-only" for="login-email-input">Email</label>
+          <label class="sr-only" for="login-identifier-input">Email o nombre de usuario</label>
           <input
-            id="login-email-input"
-            type="email"
-            placeholder="Email"
-            autocomplete="email"
+            id="login-identifier-input"
+            type="text"
+            placeholder="Email o nombre de usuario"
+            autocomplete="username"
             required
           />
           <label class="sr-only" for="login-password-input">Contraseña</label>
@@ -103,90 +103,15 @@
           <button id="tab-lista" class="tab-button is-active" type="button" role="tab" aria-selected="true">
             📍 Lista
           </button>
+          <button id="tab-crear" class="tab-button" type="button" role="tab" aria-selected="false">
+            ✏️ Crear lugar
+          </button>
           <button id="tab-mapa" class="tab-button" type="button" role="tab" aria-selected="false">
             🗺️ Mapa
           </button>
         </nav>
 
         <section id="view-lista" class="tab-view">
-          <section class="add-place">
-            <div class="section-heading">
-              <h2>Añadir lugar</h2>
-              <p>Rellena lo que sepas, la ubicación es opcional.</p>
-            </div>
-
-            <form id="place-form" class="place-form">
-              <div class="place-form-row">
-                <label class="sr-only" for="place-name-input">Nombre del lugar</label>
-                <input
-                  id="place-name-input"
-                  type="text"
-                  placeholder="Nombre del lugar"
-                  autocomplete="off"
-                  maxlength="140"
-                  required
-                />
-                <label class="sr-only" for="place-tipo-input">Tipo</label>
-                <select id="place-tipo-input" required></select>
-              </div>
-
-              <div class="place-form-row">
-                <label class="sr-only" for="place-pais-input">País</label>
-                <input
-                  id="place-pais-input"
-                  type="text"
-                  placeholder="País"
-                  autocomplete="off"
-                  maxlength="80"
-                  list="pais-datalist"
-                />
-                <datalist id="pais-datalist"></datalist>
-
-                <label class="sr-only" for="place-ciudad-input">Ciudad</label>
-                <input
-                  id="place-ciudad-input"
-                  type="text"
-                  placeholder="Ciudad"
-                  autocomplete="off"
-                  maxlength="80"
-                  list="ciudad-datalist"
-                />
-                <datalist id="ciudad-datalist"></datalist>
-              </div>
-
-              <label class="sr-only" for="place-nota-input">Nota</label>
-              <textarea
-                id="place-nota-input"
-                class="place-nota"
-                placeholder="Tu nota u opinión sobre el sitio..."
-                maxlength="600"
-                rows="3"
-              ></textarea>
-
-              <div class="location-controls">
-                <button id="use-my-location" type="button" class="location-btn">
-                  📍 Usar mi ubicación actual
-                </button>
-                <div class="location-search">
-                  <input
-                    id="address-search-input"
-                    type="text"
-                    placeholder="Buscar dirección o nombre del sitio"
-                    autocomplete="off"
-                  />
-                  <button id="address-search-button" type="button" class="location-btn">
-                    Buscar
-                  </button>
-                </div>
-              </div>
-              <p class="location-hint">O toca directamente sobre el mapa para marcar el punto.</p>
-              <div id="form-map" class="form-map"></div>
-              <p id="location-status" class="location-status"></p>
-
-              <button type="submit" class="submit-place">Guardar lugar</button>
-            </form>
-          </section>
-
           <section class="filters">
             <select id="filter-pais"></select>
             <select id="filter-ciudad"></select>
@@ -199,11 +124,134 @@
           <ul id="places-list" class="places-list"></ul>
         </section>
 
+        <section id="view-crear" class="tab-view hidden">
+          <div class="section-heading">
+            <h2>Añadir lugar</h2>
+            <p>Rellena lo que sepas, la ubicación es opcional.</p>
+          </div>
+
+          <form id="place-form" class="place-form">
+            <div class="place-form-row">
+              <label class="sr-only" for="place-name-input">Nombre del lugar</label>
+              <input
+                id="place-name-input"
+                type="text"
+                placeholder="Nombre del lugar"
+                autocomplete="off"
+                maxlength="140"
+                required
+              />
+              <label class="sr-only" for="place-tipo-input">Tipo</label>
+              <select id="place-tipo-input" required></select>
+            </div>
+
+            <div class="place-form-row">
+              <label class="sr-only" for="place-pais-input">País</label>
+              <input
+                id="place-pais-input"
+                type="text"
+                placeholder="País"
+                autocomplete="off"
+                maxlength="80"
+                list="pais-datalist"
+              />
+              <datalist id="pais-datalist"></datalist>
+
+              <label class="sr-only" for="place-ciudad-input">Ciudad</label>
+              <input
+                id="place-ciudad-input"
+                type="text"
+                placeholder="Ciudad"
+                autocomplete="off"
+                maxlength="80"
+                list="ciudad-datalist"
+              />
+              <datalist id="ciudad-datalist"></datalist>
+            </div>
+
+            <label class="sr-only" for="place-nota-input">Nota</label>
+            <textarea
+              id="place-nota-input"
+              class="place-nota"
+              placeholder="Tu nota u opinión sobre el sitio..."
+              maxlength="600"
+              rows="3"
+            ></textarea>
+
+            <div class="location-controls">
+              <button id="use-my-location" type="button" class="location-btn">
+                📍 Usar mi ubicación actual
+              </button>
+              <div class="location-search">
+                <input
+                  id="address-search-input"
+                  type="text"
+                  placeholder="Buscar dirección o nombre del sitio"
+                  autocomplete="off"
+                />
+                <button id="address-search-button" type="button" class="location-btn">
+                  Buscar
+                </button>
+              </div>
+            </div>
+            <p class="location-hint">O toca directamente sobre el mapa para marcar el punto.</p>
+            <div id="form-map" class="form-map"></div>
+            <p id="location-status" class="location-status"></p>
+
+            <button type="submit" class="submit-place">Guardar lugar</button>
+          </form>
+        </section>
+
         <section id="view-mapa" class="tab-view hidden">
           <div id="main-map" class="main-map"></div>
         </section>
       </section>
     </main>
+
+    <div id="edit-modal" class="modal-overlay hidden">
+      <div class="modal-panel">
+        <h2>Editar lugar</h2>
+
+        <form id="edit-form" class="place-form">
+          <input type="hidden" id="edit-id-input" />
+
+          <div class="place-form-row">
+            <label class="sr-only" for="edit-name-input">Nombre del lugar</label>
+            <input id="edit-name-input" type="text" placeholder="Nombre del lugar" maxlength="140" required />
+            <label class="sr-only" for="edit-tipo-input">Tipo</label>
+            <select id="edit-tipo-input" required></select>
+          </div>
+
+          <div class="place-form-row">
+            <label class="sr-only" for="edit-pais-input">País</label>
+            <input id="edit-pais-input" type="text" placeholder="País" maxlength="80" />
+            <label class="sr-only" for="edit-ciudad-input">Ciudad</label>
+            <input id="edit-ciudad-input" type="text" placeholder="Ciudad" maxlength="80" />
+          </div>
+
+          <label class="sr-only" for="edit-nota-input">Nota</label>
+          <textarea id="edit-nota-input" class="place-nota" placeholder="Tu nota u opinión..." maxlength="600" rows="3"></textarea>
+
+          <div class="location-controls">
+            <button id="edit-use-my-location" type="button" class="location-btn">
+              📍 Usar mi ubicación actual
+            </button>
+            <div class="location-search">
+              <input id="edit-address-search-input" type="text" placeholder="Buscar dirección o nombre del sitio" autocomplete="off" />
+              <button id="edit-address-search-button" type="button" class="location-btn">Buscar</button>
+            </div>
+          </div>
+          <p class="location-hint">O toca directamente sobre el mapa para marcar el punto.</p>
+          <div id="edit-map" class="form-map"></div>
+          <p id="edit-location-status" class="location-status"></p>
+
+          <div class="modal-actions">
+            <button id="edit-cancel" class="clear-button" type="button">Cancelar</button>
+            <button type="submit" class="submit-place">Guardar cambios</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
