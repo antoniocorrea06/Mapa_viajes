@@ -705,35 +705,60 @@ function renderList(places) {
     }
 
     const puedeEditarOBorrar = esTuyo || isSupremo();
+    const tieneUbicacion = place.latitud != null && place.longitud != null;
 
-    if (puedeEditarOBorrar) {
+    if (puedeEditarOBorrar || tieneUbicacion) {
       const footer = document.createElement("div");
       footer.className = "place-card-footer";
 
-      const editButton = document.createElement("button");
-      editButton.className = "place-edit";
-      editButton.type = "button";
-      editButton.textContent = "Editar";
-      editButton.addEventListener("click", (event) => {
-        event.stopPropagation();
-        openEditModal(place);
-      });
+      if (tieneUbicacion) {
+        const mapsButton = document.createElement("button");
+        mapsButton.className = "place-maps";
+        mapsButton.type = "button";
+        mapsButton.textContent = "🧭 Cómo llegar";
+        mapsButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openInGoogleMaps(place);
+        });
+        footer.append(mapsButton);
+      }
 
-      const deleteButton = document.createElement("button");
-      deleteButton.className = "place-delete";
-      deleteButton.type = "button";
-      deleteButton.textContent = "Eliminar";
-      deleteButton.addEventListener("click", (event) => {
-        event.stopPropagation();
-        handleDeletePlace(place.id);
-      });
+      if (puedeEditarOBorrar) {
+        const editButton = document.createElement("button");
+        editButton.className = "place-edit";
+        editButton.type = "button";
+        editButton.textContent = "Editar";
+        editButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          openEditModal(place);
+        });
 
-      footer.append(editButton, deleteButton);
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "place-delete";
+        deleteButton.type = "button";
+        deleteButton.textContent = "Eliminar";
+        deleteButton.addEventListener("click", (event) => {
+          event.stopPropagation();
+          handleDeletePlace(place.id);
+        });
+
+        footer.append(editButton, deleteButton);
+      }
+
       card.append(footer);
     }
 
     elements.placesList.append(card);
   }
+}
+
+function openInGoogleMaps(place) {
+  if (place.latitud == null || place.longitud == null) {
+    return;
+  }
+
+  const url = `https://www.google.com/maps/search/?api=1&query=${place.latitud},${place.longitud}`;
+  window.open(url, "_blank", "noopener");
 }
 
 async function handleDeletePlace(id) {
@@ -958,6 +983,7 @@ function buildPopupHtml(place) {
     ${place.direccion ? `<br />${escapeHtml(place.direccion)}` : ""}
     ${place.nota ? `<br /><em>${escapeHtml(place.nota)}</em>` : ""}
     <br /><span class="popup-autor">Añadido por ${escapeHtml(autor)}</span>
+    <br /><a class="popup-maps-link" href="https://www.google.com/maps/search/?api=1&query=${place.latitud},${place.longitud}" target="_blank" rel="noopener">🧭 Cómo llegar (Google Maps)</a>
   `;
 }
 
